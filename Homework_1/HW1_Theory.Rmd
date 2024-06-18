@@ -1,0 +1,797 @@
+---
+title: null
+output: html_document
+date: null
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Load necessary packages
+library(knitr)
+library(kableExtra)
+```
+<h2 style="text-align: center;">Homework 1 Theory</h2>
+
+
+## Question 1
+<b>
+Often in binary classification we are interested in the differences in the output of our current classifier, g, and an unknown function f that we are trying to learn. It is common in these cases to examine the quantity produced by $f(x)g(x)$ for a given input $x$. For this problem, let D be an arbitrary distribution on the domain $\{−1, 1\}^n$, and let $f, g : \{−1, 1\}^n → \{−1, 1\}$ be two Boolean functions.
+</b>
+
+<br>
+<br>
+
+<b>
+(a) Prove that:
+$$
+\mathbb{P}_{x \sim D}[f(x) \neq g(x)]=\frac{1-\mathbb{E}_{x \sim D}[f(x) g(x)]}{2}
+$$
+</b>
+
+Here, $\mathbb{P}_{x \sim D}[f(x) \neq g(x)]$ is the probability that the functions \(f\) and \(g\) produce different outputs for a randomly chosen \(x\) from the distribution \(D\). The expectation \(\mathbb{E}_{x \sim D}[f(x) g(x)]\) represents the expected value of the product \(f(x) g(x)\) over the distribution \(D\).
+
+Let's start by considering the possible values of \(f(x) g(x)\):
+
+1. When $f(x) = g(x)$, we have $f(x) g(x) = 1$.
+2. When \(f(x) \neq g(x)\), we have \(f(x) g(x) = -1\).
+
+Let \(p\) be the probability that \(f(x) \neq g(x)\). Thus, \(\mathbb{P}_{x \sim D}[f(x) \neq g(x)] = p\).
+
+Next, we analyze the expectation \(\mathbb{E}_{x \sim D}[f(x) g(x)]\). This expectation can be written as the sum of the probabilities of the two cases mentioned above:
+
+\[
+\mathbb{E}_{x \sim D}[f(x) g(x)] = \mathbb{P}_{x \sim D}[f(x) = g(x)] \cdot 1 + \mathbb{P}_{x \sim D}[f(x) \neq g(x)] \cdot (-1).
+\]
+
+Since \(\mathbb{P}_{x \sim D}[f(x) = g(x)] = 1 - p\) and \(\mathbb{P}_{x \sim D}[f(x) \neq g(x)] = p\), we can substitute these into the expectation:
+
+\[
+\mathbb{E}_{x \sim D}[f(x) g(x)] = (1 - p) \cdot 1 + p \cdot (-1).
+\]
+
+Simplifying, we get:
+
+\[
+\mathbb{E}_{x \sim D}[f(x) g(x)] = 1 - p - p = 1 - 2p.
+\]
+
+Now, solving for \(p\) in terms of \(\mathbb{E}_{x \sim D}[f(x) g(x)]\), we get:
+
+\[
+\mathbb{E}_{x \sim D}[f(x) g(x)] = 1 - 2p.
+\]
+
+Rearranging the equation to solve for \(p\):
+
+\[
+2p = 1 - \mathbb{E}_{x \sim D}[f(x) g(x)],
+\]
+
+\[
+p = \frac{1 - \mathbb{E}_{x \sim D}[f(x) g(x)]}{2}.
+\]
+
+Thus, we have shown that:
+
+\[
+\mathbb{P}_{x \sim D}[f(x) \neq g(x)] = \frac{1 - \mathbb{E}_{x \sim D}[f(x) g(x)]}{2}.
+\]
+
+This completes the proof.
+
+<b> 
+(b) Would this still be true if the domain were some other domain (such as $\mathbb{R}^{n}$, where $\mathbb{R}$ denotes the real numbers, with say the Gaussian distribution) instead of $\{-1,1\}^{n}$ ? If yes, justify your answer. If not, give a counterexample. <br>
+Note: Only the domain changes here. The output is still boolean.
+</b>
+
+Yes, the result still holds even if the domain is changed to another domain, such as \(\mathbb{R}^n\) with a Gaussian distribution. The key idea here is that the proof relies on the behavior of the functions \(f\) and \(g\) being Boolean-valued and the expectation being taken over a probability distribution. The structure of the domain itself does not affect the proof.
+
+Let's restate the problem for a general domain:
+
+For \(D\) as an arbitrary distribution on a domain \(X\), and \(f, g : X \to \{-1, 1\}\), we want to show:
+
+\[ \mathbb{P}_{x \sim D}[f(x) \neq g(x)] = \frac{1 - \mathbb{E}_{x \sim D}[f(x) g(x)]}{2}. \]
+
+The proof follows the same logic as before. Here's the step-by-step justification:
+
+1. **Possible Values of \(f(x) g(x)\)**: The values that \(f(x) g(x)\) can take are still \(\{-1, 1\}\), since both \(f\) and \(g\) are Boolean functions taking values in \(\{-1, 1\}\).
+
+2. **Expectation Analysis**: We again consider the cases:
+    - When \(f(x) = g(x)\), \(f(x) g(x) = 1\).
+    - When \(f(x) \neq g(x)\), \(f(x) g(x) = -1\).
+
+3. **Probability Representation**: Let \(p\) be the probability that \(f(x) \neq g(x)\). Thus, \(\mathbb{P}_{x \sim D}[f(x) \neq g(x)] = p\).
+
+4. **Calculating the Expectation**:
+    \[
+    \mathbb{E}_{x \sim D}[f(x) g(x)] = \mathbb{P}_{x \sim D}[f(x) = g(x)] \cdot 1 + \mathbb{P}_{x \sim D}[f(x) \neq g(x)] \cdot (-1).
+    \]
+    Since \(\mathbb{P}_{x \sim D}[f(x) = g(x)] = 1 - p\) and \(\mathbb{P}_{x \sim D}[f(x) \neq g(x)] = p\), we can substitute these probabilities into the expectation:
+    \[
+    \mathbb{E}_{x \sim D}[f(x) g(x)] = (1 - p) \cdot 1 + p \cdot (-1).
+    \]
+    Simplifying, we get:
+    \[
+    \mathbb{E}_{x \sim D}[f(x) g(x)] = 1 - p - p = 1 - 2p.
+    \]
+
+5. **Solving for \(p\)**:
+    \[
+    \mathbb{E}_{x \sim D}[f(x) g(x)] = 1 - 2p.
+    \]
+    Rearranging the equation to solve for \(p\):
+    \[
+    2p = 1 - \mathbb{E}_{x \sim D}[f(x) g(x)],
+    \]
+    \[
+    p = \frac{1 - \mathbb{E}_{x \sim D}[f(x) g(x)]}{2}.
+    \]
+
+Therefore, the relationship holds regardless of the domain \(X\) over which the functions \(f\) and \(g\) are defined, provided the outputs remain Boolean and the expectation is taken over a probability distribution \(D\). This includes domains like \(\mathbb{R}^n\) with distributions such as the Gaussian distribution. The key properties used in the proof are the Boolean nature of the functions and the linearity of expectation, which are not affected by the specific structure of the domain.
+
+
+```{r test, include=FALSE, echo=FALSE}
+
+```
+
+### Question 2
+
+<b>
+Let $f$ be a decision tree with $t$ leaves over the variables $x=\left(x_{1}, \ldots, x_{n}\right) \in$ $\{-1,1\}^{n}$. Explain how to write $f$ as a multivariate polynomial $p\left(x_{1}, \ldots, x_{n}\right)$ such that for every input $x \in\{-1,1\}^{n}, f(x)=p(x)$. (You may interpret -1 as FALSE and 1 as TRUE or the other way round, at your preference.) (Hint: try to come up with an "indicator polynomial" for every leaf, i.e. one that evaluates to the leaf's value if $x$ is such that that path is taken, and 0 otherwise.)
+</b>
+
+<br>
+
+To write a decision tree \( f \) with \( t \) leaves over the variables \( x = (x_1, \ldots, x_n) \in \{-1, 1\}^n \) as a multivariate polynomial \( p(x_1, \ldots, x_n) \) such that for every input \( x \in \{-1, 1\}^n \), \( f(x) = p(x) \), we can follow the hint of constructing indicator polynomials for each leaf. Let's break this down step-by-step.
+
+### Step-by-Step Construction
+
+1. **Decision Tree Representation**: 
+   - Each leaf in the decision tree corresponds to a specific path from the root to that leaf.
+   - Each internal node of the tree checks a variable \( x_i \) and branches based on its value.
+
+2. **Indicator Polynomial for Each Leaf**:
+   - Suppose leaf \( L \) has a value \( v_L \) (either \(-1\) or \(1\)).
+   - The path to this leaf corresponds to a series of decisions: checking whether each \( x_i \) is \(-1\) or \(1\).
+
+3. **Path Representation**:
+   - Each decision along the path to a leaf can be represented using the variables \( x_i \).
+   - If a decision requires \( x_i = 1 \) (True), we use the term \(\frac{1 + x_i}{2}\).
+   - If a decision requires \( x_i = -1 \) (False), we use the term \(\frac{1 - x_i}{2}\).
+
+   These terms are chosen because:
+   - \(\frac{1 + x_i}{2}\) is \(1\) if \( x_i = 1 \) and \(0\) if \( x_i = -1\).
+   - \(\frac{1 - x_i}{2}\) is \(1\) if \( x_i = -1 \) and \(0\) if \( x_i = 1 \).
+
+4. **Constructing the Indicator Polynomial for a Leaf**:
+   - For each path to a leaf, multiply the terms corresponding to the decisions along that path.
+   - This product will be \(1\) if \( x \) follows the exact path to the leaf and \(0\) otherwise.
+
+5. **Combining the Polynomials**:
+   - For each leaf \( L \) with value \( v_L \), construct the indicator polynomial \( I_L(x) \).
+   - Multiply \( I_L(x) \) by \( v_L \) to get the contribution of that leaf.
+   - Sum these contributions to get the overall polynomial \( p(x) \).
+
+### Example Construction
+
+Let's make this concrete with an example:
+
+Suppose we have a decision tree over \( x_1 \) and \( x_2 \) with the following structure:
+
+- Root: Check \( x_1 \)
+  - If \( x_1 = 1 \): Check \( x_2 \)
+    - If \( x_2 = 1 \): Leaf with value \( 1 \)
+    - If \( x_2 = -1 \): Leaf with value \( -1 \)
+  - If \( x_1 = -1 \): Leaf with value \( 1 \)
+
+For each leaf, we construct the indicator polynomial:
+
+1. **Leaf with value \( 1 \) for \( x_1 = 1 \) and \( x_2 = 1 \)**:
+   - Indicator polynomial: \(\frac{1 + x_1}{2} \cdot \frac{1 + x_2}{2}\).
+
+2. **Leaf with value \( -1 \) for \( x_1 = 1 \) and \( x_2 = -1 \)**:
+   - Indicator polynomial: \(\frac{1 + x_1}{2} \cdot \frac{1 - x_2}{2}\).
+
+3. **Leaf with value \( 1 \) for \( x_1 = -1 \)**:
+   - Indicator polynomial: \(\frac{1 - x_1}{2}\).
+
+Now, we construct the polynomial \( p(x) \):
+
+\[
+p(x) = 1 \cdot \left(\frac{1 + x_1}{2} \cdot \frac{1 + x_2}{2}\right) + (-1) \cdot \left(\frac{1 + x_1}{2} \cdot \frac{1 - x_2}{2}\right) + 1 \cdot \left(\frac{1 - x_1}{2}\right).
+\]
+
+Simplifying \( p(x) \):
+
+\[
+p(x) = \frac{(1 + x_1)(1 + x_2)}{4} - \frac{(1 + x_1)(1 - x_2)}{4} + \frac{1 - x_1}{2}.
+\]
+
+Distributing and combining terms:
+
+\[
+p(x) = \frac{1 + x_1 + x_2 + x_1 x_2}{4} - \frac{1 + x_1 - x_2 - x_1 x_2}{4} + \frac{1 - x_1}{2}.
+\]
+
+Simplifying further:
+
+\[
+p(x) = \frac{1 + x_1 + x_2 + x_1 x_2 - 1 - x_1 + x_2 + x_1 x_2}{4} + \frac{1 - x_1}{2}.
+\]
+
+\[
+p(x) = \frac{2 x_2 + 2 x_1 x_2}{4} + \frac{1 - x_1}{2}.
+\]
+
+\[
+p(x) = \frac{x_2 + x_1 x_2}{2} + \frac{1 - x_1}{2}.
+\]
+
+Combining the terms:
+
+\[
+p(x) = \frac{x_2 (1 + x_1) + 1 - x_1}{2}.
+\]
+
+Thus, we have expressed the decision tree as a multivariate polynomial \( p(x) \).
+
+### General Form
+
+For a decision tree with \( t \) leaves, the general form of the polynomial will be:
+
+\[ p(x) = \sum_{L \text{ leaf}} v_L \cdot I_L(x), \]
+
+where \( I_L(x) \) is the indicator polynomial for the path to leaf \( L \). This approach works for any decision tree structure and any number of variables \( x_i \).
+
+
+### Question 3
+<b>
+Compute a depth-two decision tree for the training data in table 1 using the Gini function, $C(a)=2 a(1-a)$ as described in class. What is the overall accuracy on the training data of the tree? For clarity, this will be a full binary tree and a full binary tree of depth-two has four leaves.
+
+```{r, echo=FALSE}
+# Create the data frame
+data <- data.frame(
+  X = c(0, 0, 0, 0, 1, 1, 1, 1),
+  Y = c(0, 0, 1, 1, 0, 0, 1, 1),
+  Z = c(0, 1, 0, 1, 0, 1, 0, 1),
+  `No._positive_examples` = c(10, 25, 35, 35, 5, 30, 10, 15),
+  `No._negative_examples` = c(20, 5, 15, 5, 15, 10, 10, 5)
+)
+
+# Print the table
+kable(data, format = "html", table.attr = "style='width:100%;'") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F) %>%
+  add_header_above(c(" " = 1, "Decision Tree Training Data" = 4))
+```
+<div style="text-align: center;">
+Table 1: decision tree training data
+</div>
+</b>
+
+To build a depth-two decision tree using the Gini function \(C(a) = 2a(1-a)\), we need to follow these steps:
+
+1. **Calculate the Gini index for each split at each variable**.
+2. **Choose the best split that minimizes the Gini index**.
+3. **Repeat the process for each child node to complete the depth-two tree**.
+
+### Step 1: Calculate the Gini index for each possible split
+
+Let's first calculate the Gini index for each variable (X, Y, Z) and each possible split (0 or 1).
+
+#### Gini Calculation for Splitting on \(X\)
+
+- **Split on \(X = 0\)**:
+  - \(X = 0\):
+    - Positive examples: \(10 + 25 + 35 + 35 = 105\)
+    - Negative examples: \(20 + 5 + 15 + 5 = 45\)
+    - Total: \(105 + 45 = 150\)
+    - Gini index for \(X = 0\): \(C(105/150) = 2 \cdot \frac{105}{150} \cdot \frac{45}{150} = 2 \cdot \frac{7}{10} \cdot \frac{3}{10} = 2 \cdot 0.21 = 0.42\)
+
+  - \(X = 1\):
+    - Positive examples: \(5 + 30 + 10 + 15 = 60\)
+    - Negative examples: \(15 + 10 + 10 + 5 = 40\)
+    - Total: \(60 + 40 = 100\)
+    - Gini index for \(X = 1\): \(C(60/100) = 2 \cdot \frac{60}{100} \cdot \frac{40}{100} = 2 \cdot 0.6 \cdot 0.4 = 2 \cdot 0.24 = 0.48\)
+
+  - Combined Gini index for split on \(X\):
+    \[
+    \frac{150}{250} \cdot 0.42 + \frac{100}{250} \cdot 0.48 = 0.252 + 0.192 = 0.444
+    \]
+
+#### Gini Calculation for Splitting on \(Y\)
+
+- **Split on \(Y = 0\)**:
+  - \(Y = 0\):
+    - Positive examples: \(10 + 25 + 5 + 30 = 70\)
+    - Negative examples: \(20 + 5 + 15 + 10 = 50\)
+    - Total: \(70 + 50 = 120\)
+    - Gini index for \(Y = 0\): \(C(70/120) = 2 \cdot \frac{70}{120} \cdot \frac{50}{120} = 2 \cdot \frac{7}{12} \cdot \frac{5}{12} = 2 \cdot 0.2917 = 0.5833\)
+
+  - \(Y = 1\):
+    - Positive examples: \(35 + 35 + 10 + 15 = 95\)
+    - Negative examples: \(15 + 5 + 10 + 5 = 35\)
+    - Total: \(95 + 35 = 130\)
+    - Gini index for \(Y = 1\): \(C(95/130) = 2 \cdot \frac{95}{130} \cdot \frac{35}{130} = 2 \cdot \frac{19}{26} \cdot \frac{7}{26} = 2 \cdot 0.2831 = 0.5662\)
+
+  - Combined Gini index for split on \(Y\):
+    \[
+    \frac{120}{250} \cdot 0.5833 + \frac{130}{250} \cdot 0.5662 = 0.28 + 0.294 = 0.574
+    \]
+
+#### Gini Calculation for Splitting on \(Z\)
+
+- **Split on \(Z = 0\)**:
+  - \(Z = 0\):
+    - Positive examples: \(10 + 35 + 5 + 10 = 60\)
+    - Negative examples: \(20 + 15 + 15 + 10 = 60\)
+    - Total: \(60 + 60 = 120\)
+    - Gini index for \(Z = 0\): \(C(60/120) = 2 \cdot \frac{60}{120} \cdot \frac{60}{120} = 2 \cdot 0.5 \cdot 0.5 = 2 \cdot 0.25 = 0.5\)
+
+  - \(Z = 1\):
+    - Positive examples: \(25 + 35 + 30 + 15 = 105\)
+    - Negative examples: \(5 + 5 + 10 + 5 = 25\)
+    - Total: \(105 + 25 = 130\)
+    - Gini index for \(Z = 1\): \(C(105/130) = 2 \cdot \frac{105}{130} \cdot \frac{25}{130} = 2 \cdot \frac{21}{26} \cdot \frac{5}{26} = 2 \cdot 0.1615 = 0.3231\)
+
+  - Combined Gini index for split on \(Z\):
+    \[
+    \frac{120}{250} \cdot 0.5 + \frac{130}{250} \cdot 0.3231 = 0.24 + 0.168 = 0.408
+    \]
+
+### Step 2: Choose the Best Split
+
+- **Gini index for \(X\) split**: \(0.444\)
+- **Gini index for \(Y\) split**: \(0.574\)
+- **Gini index for \(Z\) split**: \(0.408\)
+
+The best split is on \(Z\) with a Gini index of \(0.408\).
+
+### Step 3: Split on \(Z\) and Repeat for Depth-2 Tree
+
+#### Split on \(Z\)
+
+1. **Left child \(Z = 0\)**:
+   - Examples: \((0,0,0), (0,1,0), (1,0,0), (1,1,0)\)
+   - Positive examples: \(10 + 35 + 5 + 10 = 60\)
+   - Negative examples: \(20 + 15 + 15 + 10 = 60\)
+   
+   **Further splits on \(Z=0\)**:
+   - \(Y\) gives a Gini index of \(0.5\) 
+   - Split on \(X\) gives a Gini index of \(0.5\)
+
+2. **Right child \(Z = 1\)**:
+   - Examples: \((0,0,1), (0,1,1), (1,0,1), (1,1,1)\)
+   - Positive examples: \(25 + 35 + 30 + 15 = 105\)
+   - Negative examples: \(5 + 5 + 10 + 5 = 25\)
+   
+   **Further splits on \(Z=1\)**:
+   - Splitting on \(X\) or \(Y\) will be decided 
+
+This means our next best split can be on \(X\). This results in:
+
+### Split on \(X\):
+
+#### Left child \(X = 0\):
+
+1. **Left child \(Y = 0\)**:
+   - \(0, 0, 0\) & \(0, 0, 1\): \(35, 5\)
+2. **Right child \(Y = 1\)**:
+   - \(0, 1, 0\) & \(0, 1, 1\): \(70, 20\)
+
+#### Right child \(X = 1\):
+
+1. **Left child \(Y = 0\)**:
+   - \(1, 0, 0\) & \(1, 0, 1\): \(35, 10\)
+2. **Right child \(Y = 1\)**:
+   - \(1, 1, 0\) & \(1, 1, 1\): \(10, 10\)
+
+The decision tree is now completed. 
+
+### Accuracy Calculation:
+
+To calculate the total accuracy of the training data for the depth-two decision tree constructed in Q3, we need to follow these steps:
+
+1. **Review the constructed decision tree**: Based on our earlier construction, we chose to split on \( Z \) first, followed by another split on \( X \) and \( Y \). This gives us four leaves corresponding to different conditions of \( X \), \( Y \), and \( Z \).
+
+2. **Determine the prediction at each leaf**: For each leaf, the prediction is based on the majority class (most frequent label).
+
+3. **Calculate the number of correctly classified examples at each leaf**.
+
+4. **Sum the correctly classified examples and compute the accuracy**.
+
+### Step-by-Step Calculation
+
+#### Decision Tree Structure
+
+1. **Root Node Split**: Split on \( Z \):
+   - Left child (\( Z = 0 \))
+   - Right child (\( Z = 1 \))
+
+#### Left Child (\( Z = 0 \))
+
+2. **Left Child Split** (\( Z = 0 \)):
+   - Further split on \( Y \):
+     - Left child (\( Y = 0 \)):
+       - Predict based on majority class of \((0,0,0)\) and \((1,0,0)\)
+     - Right child (\( Y = 1 \)):
+       - Predict based on majority class of \((0,1,0)\) and \((1,1,0)\)
+
+3. **Predictions for \( Z = 0 \)**:
+   - Left child (\( Y = 0 \)): \((0,0,0)\) and \((1,0,0)\)
+     - \((0,0,0)\): 10 positive, 20 negative
+     - \((1,0,0)\): 5 positive, 15 negative
+     - Total: 15 positive, 35 negative
+     - Majority class: Negative
+   - Right child (\( Y = 1 \)): \((0,1,0)\) and \((1,1,0)\)
+     - \((0,1,0)\): 35 positive, 15 negative
+     - \((1,1,0)\): 10 positive, 10 negative
+     - Total: 45 positive, 25 negative
+     - Majority class: Positive
+
+#### Right Child (\( Z = 1 \))
+
+4. **Right Child Split** (\( Z = 1 \)):
+   - Further split on \( X \):
+     - Left child (\( X = 0 \)):
+       - Predict based on majority class of \((0,0,1)\) and \((0,1,1)\)
+     - Right child (\( X = 1 \)):
+       - Predict based on majority class of \((1,0,1)\) and \((1,1,1)\)
+
+5. **Predictions for \( Z = 1 \)**:
+   - Left child (\( X = 0 \)): \((0,0,1)\) and \((0,1,1)\)
+     - \((0,0,1)\): 25 positive, 5 negative
+     - \((0,1,1)\): 35 positive, 5 negative
+     - Total: 60 positive, 10 negative
+     - Majority class: Positive
+   - Right child (\( X = 1 \)): \((1,0,1)\) and \((1,1,1)\)
+     - \((1,0,1)\): 30 positive, 10 negative
+     - \((1,1,1)\): 15 positive, 5 negative
+     - Total: 45 positive, 15 negative
+     - Majority class: Positive
+
+### Correctly Classified Examples
+
+Now we count the correctly classified examples for each leaf.
+
+1. **Left child (\( Z = 0, Y = 0 \))**:
+   - Total examples: 50 (35 negative)
+   - Correctly classified: 35
+
+2. **Left child (\( Z = 0, Y = 1 \))**:
+   - Total examples: 70 (45 positive)
+   - Correctly classified: 45
+
+3. **Right child (\( Z = 1, X = 0 \))**:
+   - Total examples: 70 (60 positive)
+   - Correctly classified: 60
+
+4. **Right child (\( Z = 1, X = 1 \))**:
+   - Total examples: 60 (45 positive)
+   - Correctly classified: 45
+
+### Total Accuracy
+
+Sum the correctly classified examples and compute the accuracy:
+
+- Correctly classified examples:
+  \[
+  35 + 45 + 60 + 45 = 185
+  \]
+
+- Total examples:
+  \[
+  10 + 20 + 25 + 5 + 35 + 15 + 35 + 5 + 5 + 15 + 30 + 10 + 10 + 10 + 15 + 5 = 250
+  \]
+
+- Accuracy:
+  \[
+  \text{Accuracy} = \frac{185}{250} = 0.74 = 74\%
+  \]
+
+Therefore, the overall accuracy of the decision tree on the training data is 74%.
+
+### Question 4
+<b>
+Suppose the domain $X$ is the real line, $\mathbb{R}$, and the labels lie in $Y=\{-1,1\}$, Let $\mathcal{C}$ be the concept class consisting of simple threshold functions of the form $h_{\theta}$ for some $\theta \in \mathbb{R}$, where $h_{\theta}(x)=-1$ for all $x \leq \theta$ and $h_{\theta}(x)=1$ otherwise. Give a simple and efficient PAC learning algorithm for $\mathcal{C}$ that uses only $m=O\left(\frac{1}{\epsilon} \log \frac{1}{\delta}\right)$ training examples to output a classifier with error at most $\epsilon$ with probability at least $1-\delta$.
+</b>
+
+<br>
+
+To develop a simple and efficient PAC (Probably Approximately Correct) learning algorithm for the concept class \(\mathcal{C}\) consisting of simple threshold functions \(h_\theta\), we need to use \(m = O\left(\frac{1}{\epsilon} \log \frac{1}{\delta}\right)\) training examples to ensure that the classifier has an error of at most \(\epsilon\) with probability at least \(1 - \delta\).
+
+To design a PAC learning algorithm for the concept class \(\mathcal{C}\) consisting of simple threshold functions, we will derive the number of training examples \(m\) necessary to ensure that the classifier produced has a true error at most \(\epsilon\) with probability at least \(1 - \delta\).
+
+### Definitions and Setup
+
+- **Instance space**: \(X = \mathbb{R}\)
+- **Output space**: \(Y = \{-1, 1\}\)
+- **Concept class**: \(\mathcal{C}\) consists of threshold functions \(h_{\theta}\), where \(h_{\theta}(x) = -1\) for \(x \leq \theta\) and \(h_{\theta}(x) = 1\) for \(x > \theta\).
+- **True error**: \(\operatorname{err}(h) = \mathbb{P}_{(x,y) \sim D}[h(x) \neq y]\)
+- **Empirical error**: \(\hat{\operatorname{err}}(h) = \frac{1}{m} \sum_{i=1}^m \mathbf{1}[h(x_i) \neq y_i]\)
+
+### Goal
+
+To create a PAC learning algorithm \(B\) using a mistake-bounded learner \(A\) as a subroutine, such that the number of training examples \(m = O\left(\frac{1}{\epsilon} \log \frac{1}{\delta}\right)\) guarantees an error at most \(\epsilon\) with probability at least \(1 - \delta\).
+
+### Algorithm \(B\)
+
+1. **Initialize**:
+   - Set parameters \(\epsilon\) and \(\delta\).
+   - Calculate the number of training examples \(m\) needed using the derived bounds.
+
+2. **Collect Examples**:
+   - Draw \(m\) independent training examples \(\{(x_i, y_i)\}_{i=1}^m\) from the distribution \(D\).
+
+3. **Run Mistake-Bounded Learner**:
+   - Use the learner \(A\) on the \(m\) training examples:
+     - For each training example \((x_i, y_i)\), if \(A\) makes a mistake, update \(A\)'s hypothesis.
+     - Stop once \(A\) has processed all \(m\) examples or made \(t\) mistakes (where \(t\) is the mistake bound).
+
+4. **Output Hypothesis**:
+   - Let \(h_B\) be the final hypothesis produced by \(A\).
+
+### Analysis Using Occam's Razor
+
+#### Step 1: Define the Bad Event
+
+The **bad event** is defined as the event where the hypothesis \(h\) produced by \(A\) has a true error greater than \(\epsilon\), i.e., \(\operatorname{err}(h) > \epsilon\).
+
+#### Step 2: Apply Occam's Razor
+
+- Given the hypothesis space \(H\), the probability that there exists a hypothesis \(h \in H\) that is consistent with \(m\) examples and has an error greater than \(\epsilon\) is less than \(|H|(1 - \epsilon)^m\).
+
+- We want this probability to be smaller than \(\delta\):
+  \[
+  |H|(1 - \epsilon)^m < \delta
+  \]
+
+- Taking the natural logarithm on both sides:
+  \[
+  \ln(|H|) + m \ln(1 - \epsilon) < \ln(\delta)
+  \]
+
+- Using the approximation \(\ln(1 - \epsilon) \approx -\epsilon\) for small \(\epsilon\):
+  \[
+  \ln(|H|) - m \epsilon < \ln(\delta)
+  \]
+
+- Rearranging for \(m\):
+  \[
+  m > \frac{\ln(|H|) + \ln(1/\delta)}{\epsilon}
+  \]
+
+#### Step 3: Relate Hypothesis Space to Mistake Bound
+
+- The mistake-bounded learner \(A\) can make at most \(t\) mistakes, and we assume that the number of potential hypotheses \(A\) might output is at most \(t\) (since each mistake can result in a different hypothesis).
+
+- Therefore, the effective size of the hypothesis space \(|H|\) is bounded by \(2t\).
+
+#### Step 4: Calculate the Number of Examples \(m\)
+
+- Substituting \(|H| \leq 2t\) into the bound for \(m\):
+  \[
+  m > \frac{\ln(2t) + \ln(1/\delta)}{\epsilon}
+  \]
+
+- Simplifying the expression:
+  \[
+  m > \frac{\ln(2) + \ln(t) + \ln(1/\delta)}{\epsilon}
+  \]
+
+### Conclusion
+
+The PAC learning algorithm \(B\) can be summarized as follows:
+
+1. **Initialize**: Compute \(m\) using \(m > \frac{\ln(2) + \ln(t) + \ln(1/\delta)}{\epsilon}\).
+2. **Collect \(m\) samples** from the distribution \(D\).
+3. **Run the mistake-bounded learner \(A\)** on these samples.
+4. **Output the final hypothesis \(h_B\)**.
+
+By choosing \(m\) according to the derived bound, we ensure that \(B\) PAC-learns the concept class \(\mathcal{C}\) with high probability and within the desired accuracy. This guarantees that the hypothesis \(h_B\) produced by \(B\) will have a true error at most \(\epsilon\) with probability at least \(1 - \delta\).
+
+
+### Question 5
+<b>
+In this problem we will show that the existence of an efficient mistake-bounded learner for a class $\mathcal{C}$ implies an efficient PAC learner for $\mathcal{C}$.
+
+Concretely, let $\mathcal{C}$ be a function class with domain $X \in\{-1,1\}^{n}$ and binary labels $Y \in\{-1,1\}$. Assume that $\mathcal{C}$ can be learned by algorithm/learner $A$ with some mistake bound $t$. You may assume you know the value $t$. You may also assume that at each iteration, $A$ runs in time polynomial in $n$ and that $A$ only updates its state when it gets an example wrong. The concrete goal of this problem is to create a PAC-learning algorithm, $B$, that can PAClearn concept class $\mathcal{C}$ with respect to an arbitrary distribution $D$ over $\{-1,1\}^{n}$ using algorithm $A$ as a sub-routine.
+
+In order to prove that learner $B$ can PAC-learn concept class $\mathcal{C}$, we must show that there exists a finite number of examples, $m$, that we can draw from $D$ such that $B$ produces a hypothesis whose true error is more than $\epsilon$ with probability at most $\delta$. First, fix some distribution $D$ on $X$, and we will assume that the examples are labeled by an unknown $c \in \mathcal{C}$. Additionally, for a hypothesis (i.e. function) $h: X \rightarrow Y$, let $\operatorname{err}(h)=\mathbb{P}_{x \sim D}[h(x) \neq c(x)]$. Formally, we will need to bound $m$ such that the following condition holds:
+
+$$
+\begin{equation*}
+\forall \delta, \epsilon \in[0,1], \exists m \in \mathbb{N} \mid \quad \mathbb{P}_{x \sim D}\left[\operatorname{err}\left(B\left(\{x\}^{m}\right)\right)>\epsilon\right] \leq \delta \quad x \sim D \tag{1}
+\end{equation*}
+$$
+
+where $B\left(\{x\}^{m}\right)$ denotes a hypotheses produced from $B$ with $m$ random draws of $x$ from an arbitrary distribution $D$.
+
+To find this $m$, we will first decompose it into blocks of examples of size $k$ and make use of results based on a single block to find the bound necessary for $m$ that satisfies condition 1 .
+
+Note: Using the identity $\mathbb{P}[\operatorname{err}(h)>\epsilon]+\mathbb{P}[\operatorname{err}(h) \leq \epsilon]=1$, we can see that $\mathbb{P}[\operatorname{err}(h)>\epsilon] \leq \delta \Leftrightarrow$ $\mathbb{P}[\operatorname{err}(h) \leq \epsilon] \geq 1-\delta$, which makes the connection to the definition of PAC-learning discussed in lecture explicit.
+
+(a) Fix a single arbitrary hypothesis $h^{\prime}: X \rightarrow Y$ produced by $A$ and determine a lower bound on the number of examples, $k$, such that $\mathbb{P}\left[\operatorname{err}\left(h^{\prime}\right)>\epsilon\right] \leq \delta^{\prime}$. (The contrapositive view would be: with probability at least $1-\delta^{\prime}$, it must be the case that $\operatorname{err}\left(h^{\prime}\right) \leq \epsilon$. Make sure this makes sense.)
+</b>
+
+<br>
+
+To find the lower bound on the number of examples \( k \) such that \(\mathbb{P}[\operatorname{err}(h') > \epsilon] \leq \delta'\), we can leverage the Hoeffding inequality, which provides a way to bound the probability that the sum of random variables deviates from its expected value.
+
+### Step-by-Step Solution:
+
+1. **Define the Error and Empirical Error**:
+   - Let \( h' \) be a hypothesis produced by \( A \).
+   - The true error of \( h' \) is \(\operatorname{err}(h') = \mathbb{P}_{x \sim D}[h'(x) \neq c(x)]\).
+   - The empirical error of \( h' \) on a sample of size \( k \) is \(\hat{\operatorname{err}}(h') = \frac{1}{k} \sum_{i=1}^k \mathbf{1}[h'(x_i) \neq c(x_i)]\).
+
+2. **Use Hoeffding's Inequality**:
+   - Hoeffding's inequality states that for independent random variables \( X_1, X_2, \ldots, X_k \) with values in \([0, 1]\),
+     \[
+     \mathbb{P}\left[\left|\frac{1}{k} \sum_{i=1}^k X_i - \mathbb{E}\left[\frac{1}{k} \sum_{i=1}^k X_i\right]\right| \geq \epsilon\right] \leq 2 \exp(-2 \epsilon^2 k).
+     \]
+
+3. **Apply Hoeffding's Inequality to Our Problem**:
+   - In our case, the random variables are \( X_i = \mathbf{1}[h'(x_i) \neq c(x_i)] \).
+   - The expectation \(\mathbb{E}[X_i] = \operatorname{err}(h')\).
+   - We need to bound \(\mathbb{P}[\hat{\operatorname{err}}(h') > \epsilon]\).
+
+4. **Set the Parameters in Hoeffding's Inequality**:
+   - We want \(\mathbb{P}[\hat{\operatorname{err}}(h') - \operatorname{err}(h') > \epsilon] \leq \delta'\).
+   - Using Hoeffding's inequality:
+     \[
+     \mathbb{P}\left[\hat{\operatorname{err}}(h') - \operatorname{err}(h') \geq \epsilon\right] \leq \exp(-2 \epsilon^2 k).
+     \]
+
+5. **Solve for \( k \)**:
+   - Set \(\exp(-2 \epsilon^2 k) \leq \delta'\).
+   - Taking the natural logarithm on both sides:
+     \[
+     -2 \epsilon^2 k \leq \ln(\delta'),
+     \]
+     \[
+     k \geq \frac{\ln(1/\delta')}{2 \epsilon^2}.
+     \]
+
+Therefore, the lower bound on the number of examples \( k \) required to ensure that the probability \(\mathbb{P}[\operatorname{err}(h') > \epsilon] \leq \delta'\) is:
+
+\[
+k \geq \frac{\ln(1/\delta')}{2 \epsilon^2}.
+\]
+
+### Interpretation:
+
+- This bound ensures that with probability at least \(1 - \delta'\), the empirical error \(\hat{\operatorname{err}}(h')\) will be within \(\epsilon\) of the true error \(\operatorname{err}(h')\).
+- It leverages the concentration of measure principle, indicating that with a sufficient number of samples, the empirical estimate will closely approximate the true error.
+
+This establishes the required lower bound on \( k \) and helps in constructing a PAC learning algorithm using the mistake-bounded learner \( A \).
+
+<b>
+(b) From part 5a we know that as long as a block is at least of size $k$, then if that block is classified correctly by a fixed arbitrary hypothesis $h^{\prime}$ we can effectively upper bound the probability of the 'bad event' (i.e. $A$ outputs $h^{\prime}$ s.t. $\operatorname{err}\left(h^{\prime}\right)>\epsilon$ ) by $\delta^{\prime}$. However, our bound must apply to every $h$ that our algorithm $B$ could output for an arbitrary distribution $D$ over examples. With this in mind, how large should $m$ be so that we can bound all hypotheses that could be output? (You may assume that algorithm $B$ will know the mistake bound throughout the question.)
+</b>
+
+To determine the required number of training examples \( m \) such that we can bound the error of all possible hypotheses that the PAC learner \( B \) could output, we need to ensure that the probability of any hypothesis having an error greater than \(\epsilon\) is sufficiently small. 
+
+### Key Idea:
+We will use the union bound (also known as Boole's inequality) to account for the fact that multiple hypotheses could be considered. We want to ensure that the probability of any of these hypotheses having an error greater than \(\epsilon\) is at most \(\delta\).
+
+### Steps to Determine \( m \):
+
+1. **Fix the Size of the Block**:
+   - From part 5a, we have the size of the block \( k \) such that for any fixed hypothesis \( h' \), the probability that \(\operatorname{err}(h') > \epsilon\) is at most \(\delta'\):
+     \[
+     k \geq \frac{\ln(1/\delta')}{2 \epsilon^2}.
+     \]
+
+2. **Number of Hypotheses**:
+   - Assume that the mistake-bounded algorithm \( A \) can make at most \( t \) mistakes. Therefore, the number of hypotheses that \( A \) can output is at most \( t \).
+
+3. **Union Bound Application**:
+   - We want to ensure that the probability of any hypothesis having an error greater than \(\epsilon\) is at most \(\delta\).
+   - Using the union bound, if we have \( t \) hypotheses, each with a probability of \(\delta'\) of having an error greater than \(\epsilon\), then:
+     \[
+     t \cdot \delta' \leq \delta.
+     \]
+   - This gives us:
+     \[
+     \delta' = \frac{\delta}{t}.
+     \]
+
+4. **Determine the Block Size \( k \)**:
+   - Substitute \(\delta'\) with \(\frac{\delta}{t}\) in the expression for \( k \):
+     \[
+     k \geq \frac{\ln(t/\delta)}{2 \epsilon^2}.
+     \]
+
+5. **Total Number of Examples \( m \)**:
+   - To ensure that the hypothesis output by \( B \) after seeing \( m \) examples has an error at most \(\epsilon\) with probability at least \( 1 - \delta \), we need to process at least \( t \) blocks, each of size \( k \):
+     \[
+     m = t \cdot k.
+     \]
+
+     Substituting \( k \) from the previous step:
+     \[
+     m \geq t \cdot \frac{\ln(t/\delta)}{2 \epsilon^2}.
+     \]
+
+### Conclusion:
+
+To PAC learn the concept class \(\mathcal{C}\) with respect to an arbitrary distribution \( D \) over \(\{-1, 1\}^n\), ensuring that the true error is at most \(\epsilon\) with probability at least \( 1 - \delta \), the number of training examples \( m \) must be:
+
+\[
+m \geq t \cdot \frac{\ln(t/\delta)}{2 \epsilon^2},
+\]
+
+where \( t \) is the mistake bound of the learning algorithm \( A \).
+
+This ensures that the algorithm \( B \) will produce a hypothesis with error at most \(\epsilon\) with probability at least \( 1 - \delta \).
+
+<b>
+(c) Put everything together and fully describe (with proof) a PAC learner that is able to output a hypothesis with a true error at most $\epsilon$ with probability at least $1-\delta$, given a mistake bounded learner $A$. To do this you should first describe your pseudocode for algorithm $B$ which will use $A$ as a sub-routine (no need for minute details or code, broad
+strokes will suffice). Then, prove there exists a finite number of $m$ examples for $B$ to PAC-learn $\mathcal{C}$ for all values of $\delta$ and $\epsilon$ by lower bounding $m$ by a function of $\epsilon, \delta$, and $t$ (i.e. finding a finite lower bound for $m$ such that the PAC-learning requirements in 1 are satisfied).
+</b>
+
+<br>
+
+### Pseudocode for PAC Learner \( B \)
+
+1. **Initialize**: 
+   - Set parameters \(\epsilon\), \(\delta\), and obtain the mistake bound \( t \) for learner \( A \).
+   - Calculate the block size \( k \) using \( k \geq \frac{\ln(t/\delta)}{2 \epsilon^2} \).
+   - Calculate the total number of examples \( m \) using \( m \geq t \cdot k \).
+
+2. **Collect Examples**:
+   - Draw \( m \) independent training examples \( \{(x_i, y_i)\}_{i=1}^m \) from the distribution \( D \).
+
+3. **Run Mistake-Bounded Learner**:
+   - Use learner \( A \) on the \( m \) training examples:
+     - For each training example \( (x_i, y_i) \), if \( A \) makes a mistake, update \( A \)'s hypothesis.
+     - Stop once \( A \) has processed all \( m \) examples or made \( t \) mistakes.
+
+4. **Output Hypothesis**:
+   - Let \( h_B \) be the final hypothesis produced by \( A \).
+
+### Proof of PAC-Learning
+
+To prove that \( B \) is a PAC learner, we need to show that with probability at least \( 1 - \delta \), the true error of \( h_B \) is at most \(\epsilon\).
+
+1. **Single Hypothesis Error Bound**:
+   - From part 5a, for a fixed hypothesis \( h' \) produced by \( A \), the number of examples \( k \) ensures that the probability \(\mathbb{P}[\operatorname{err}(h') > \epsilon] \leq \delta'\) if:
+     \[
+     k \geq \frac{\ln(1/\delta')}{2 \epsilon^2}.
+     \]
+
+2. **Union Bound Over Hypotheses**:
+   - Since \( A \) can make at most \( t \) mistakes, it can produce at most \( t \) different hypotheses.
+   - Using the union bound, the probability that any of these \( t \) hypotheses has an error greater than \(\epsilon\) is at most \( \delta \) if:
+     \[
+     \delta' = \frac{\delta}{t}.
+     \]
+
+3. **Determine Block Size \( k \)**:
+   - Substitute \(\delta' = \frac{\delta}{t}\) into the expression for \( k \):
+     \[
+     k \geq \frac{\ln(t/\delta)}{2 \epsilon^2}.
+     \]
+
+4. **Total Number of Examples \( m \)**:
+   - To ensure the error bound for all possible hypotheses, we need to process \( t \) blocks of size \( k \):
+     \[
+     m = t \cdot k.
+     \]
+   - Thus,
+     \[
+     m \geq t \cdot \frac{\ln(t/\delta)}{2 \epsilon^2}.
+     \]
+
+### Conclusion
+
+The algorithm \( B \), which uses \( A \) as a subroutine, can be described as follows:
+
+1. **Initialization**: Compute \( k \) and \( m \).
+2. **Collect \( m \) samples** from the distribution \( D \).
+3. **Run the mistake-bounded learner \( A \)** on these samples.
+4. **Output the final hypothesis \( h_B \)**.
+
+By choosing \( m \geq t \cdot \frac{\ln(t/\delta)}{2 \epsilon^2} \), we ensure that \( B \) is a PAC learner for the concept class \(\mathcal{C}\). This guarantees that with probability at least \( 1 - \delta \), the hypothesis \( h_B \) produced by \( B \) will have a true error at most \(\epsilon\). This completes the proof that \( B \) can PAC-learn the concept class \(\mathcal{C}\).
