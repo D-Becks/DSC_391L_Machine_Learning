@@ -4,4 +4,17 @@
     <option name="sdkName" value="python_3-8" />
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="python_3-8" project-jdk-type="Python SDK" />
+  <component name="RMarkdownSettings">
+    <option name="renderProfiles">
+      <map>
+        <entry key="file://$PROJECT_DIR$/Homework_4/HW4_Theory.Rmd">
+          <value>
+            <RMarkdownRenderProfile>
+              <option name="outputDirectoryUrl" value="file://$PROJECT_DIR$/Homework_4" />
+            </RMarkdownRenderProfile>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
 </project>
