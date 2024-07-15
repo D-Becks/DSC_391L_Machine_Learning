@@ -35,56 +35,16 @@ Now assume we observe a sequence $D:=\left\{x^{(1)}, x^{(2)}, \ldots, x^{(n)}\ri
 **(a) To ensure that $\operatorname{Pr}(X=i)$ is a valid probability mass function, what constraint should we put on $\theta=\left[\theta_{1}, \theta_{2}\right]$ ? Write your answers quantitatively as expressions that include $\theta_{1}$ and $\theta_{2}$.**
 
 
-To ensure that \(\operatorname{Pr}(X=i)\) is a valid probability mass function, the probabilities must satisfy two conditions:
-
-1. Each probability must be non-negative.
-2. The probabilities must sum to 1.
-
-Given the probabilities:
-\[
-\begin{aligned}
-& \operatorname{Pr}(X=1) = \theta_{1}, \\
-& \operatorname{Pr}(X=2) = 2\theta_{1}, \\
-& \operatorname{Pr}(X=3) = \theta_{2},
-\end{aligned}
-\]
-we can derive the constraints as follows:
-
-### Non-negativity Condition
-Each probability must be non-negative:
-\[
-\begin{aligned}
-& \theta_{1} \geq 0, \\
-& 2\theta_{1} \geq 0, \\
-& \theta_{2} \geq 0.
-\end{aligned}
-\]
-Since \(\theta_{1} \geq 0\) implies \(2\theta_{1} \geq 0\), the conditions simplify to:
-\[
-\theta_{1} \geq 0, \quad \theta_{2} \geq 0.
-\]
-
-### Sum-to-One Condition
-The probabilities must sum to 1:
-\[
+As these proabilities make up a complete pmf, we know that each probability is between $0$ and $1$ and that the sum of them is equal to $1$. 
+$$
 \theta_{1} + 2\theta_{1} + \theta_{2} = 1.
-\]
-Simplifying, we get:
-\[
+$$
+Which can be simplified to:
+$$
 3\theta_{1} + \theta_{2} = 1.
-\]
+$$
 
-### Summary of Constraints
-To ensure that \(\operatorname{Pr}(X=i)\) is a valid probability mass function, the parameters \(\theta = [\theta_{1}, \theta_{2}]\) must satisfy the following constraints:
-\[
-\begin{aligned}
-& \theta_{1} \geq 0, \\
-& \theta_{2} \geq 0, \\
-& 3\theta_{1} + \theta_{2} = 1.
-\end{aligned}
-\]
-
-These constraints ensure that the probabilities are non-negative and sum to 1, making \(\operatorname{Pr}(X=i)\) a valid probability mass function.
+As mentioned above the constraints are that these probabilities are the only probabilities that make up the pmf and that they are non-negative and their sum is exactly equal to $1$.
 
 
 <b>
@@ -97,147 +57,71 @@ $$
 and the $\log$ probability $\log \operatorname{Pr}(D \mid \theta)$.
 </b>
 
+Given the probabilities above as well as the counts $s_1, s_2, s_3$ respectively, the joint probability is below:
 
-To write down the joint probability of the data sequence \( D = \{x^{(1)}, x^{(2)}, \ldots, x^{(n)}\} \) given the parameter \(\theta\), we first use the fact that the observations are independent and identically distributed (i.i.d.). This allows us to express the joint probability as the product of the individual probabilities of each observation.
-
-Given the probabilities:
-\[
-\operatorname{Pr}(X=1) = \theta_1, \quad \operatorname{Pr}(X=2) = 2\theta_1, \quad \operatorname{Pr}(X=3) = \theta_2,
-\]
-and the counts \(s_1, s_2, s_3\) of observations of \(1, 2, 3\) respectively, we can write the joint probability \(\operatorname{Pr}(D \mid \theta)\) as follows:
-
-\[
+$$
 \operatorname{Pr}(D \mid \theta) = \prod_{i=1}^n \operatorname{Pr}(X = x^{(i)} \mid \theta).
-\]
+$$
 
-Since we have \(s_1\) observations of \(1\), \(s_2\) observations of \(2\), and \(s_3\) observations of \(3\):
-
-\[
+Since we know the count of observations for each respective probability, we can expand it as follows:
+$$
 \operatorname{Pr}(D \mid \theta) = \theta_1^{s_1} \cdot (2\theta_1)^{s_2} \cdot \theta_2^{s_3}.
-\]
+$$
 
-Combining these terms, we get:
+To find the log probability, we can first combine terms to separate off the $\theta$s and then apply the log of each side:
 
-\[
-\operatorname{Pr}(D \mid \theta) = \theta_1^{s_1} \cdot (2\theta_1)^{s_2} \cdot \theta_2^{s_3} = \theta_1^{s_1 + s_2} \cdot 2^{s_2} \cdot \theta_2^{s_3}.
-\]
-
-### Log Probability
-
-To find the log probability \(\log \operatorname{Pr}(D \mid \theta)\), we take the natural logarithm of the joint probability:
-
-\[
+$$
 \log \operatorname{Pr}(D \mid \theta) = \log \left( \theta_1^{s_1 + s_2} \cdot 2^{s_2} \cdot \theta_2^{s_3} \right).
-\]
+$$
 
-Using the properties of logarithms, we can break this into a sum:
+Which simplifies to:
 
-\[
-\log \operatorname{Pr}(D \mid \theta) = \log (\theta_1^{s_1 + s_2}) + \log (2^{s_2}) + \log (\theta_2^{s_3}).
-\]
-
-This simplifies to:
-
-\[
+$$
 \log \operatorname{Pr}(D \mid \theta) = (s_1 + s_2) \log \theta_1 + s_2 \log 2 + s_3 \log \theta_2.
-\]
-
-Thus, the log probability is:
-
-\[
-\log \operatorname{Pr}(D \mid \theta) = (s_1 + s_2) \log \theta_1 + s_2 \log 2 + s_3 \log \theta_2.
-\]
+$$
 
 **(c) Calculate the maximum likelihood estimation $\hat{\theta}$ of $\theta$ based on the sequence D.**
 
 
-To calculate the maximum likelihood estimation (MLE) \(\hat{\theta}\) of \(\theta\) based on the sequence \(D\), we need to maximize the log likelihood function derived in part (b):
+First in order to reduce the number of varibales we will simplify the expression by using $\theta_2$ in terms of $\theta_1$ by using the fact that the probabilities sum to $1$:
 
-\[
-\log \operatorname{Pr}(D \mid \theta) = (s_1 + s_2) \log \theta_1 + s_2 \log 2 + s_3 \log \theta_2.
-\]
-
-Given the constraint from part (a) that \(3\theta_1 + \theta_2 = 1\), we can use this constraint to express \(\theta_2\) in terms of \(\theta_1\):
-
-\[
+$$
 \theta_2 = 1 - 3\theta_1.
-\]
+$$
 
-Substitute this into the log likelihood function:
+Substitute this into our previous expression in part b:
 
-\[
+$$
 \log \operatorname{Pr}(D \mid \theta) = (s_1 + s_2) \log \theta_1 + s_2 \log 2 + s_3 \log (1 - 3\theta_1).
-\]
+$$
 
-To find the MLE, we need to maximize this log likelihood function with respect to \(\theta_1\). To do this, we take the derivative with respect to \(\theta_1\) and set it to zero:
+Now we will maximize this function with respect to $\theta_1$ by taking the derivative and setting it equal to $0$:
 
-\[
+$$
 \frac{d}{d\theta_1} \left[ (s_1 + s_2) \log \theta_1 + s_2 \log 2 + s_3 \log (1 - 3\theta_1) \right] = 0.
-\]
-
-Calculate the derivative:
-
-\[
-\frac{d}{d\theta_1} \left[ (s_1 + s_2) \log \theta_1 \right] = \frac{s_1 + s_2}{\theta_1},
-\]
-
-\[
-\frac{d}{d\theta_1} \left[ s_3 \log (1 - 3\theta_1) \right] = -\frac{3s_3}{1 - 3\theta_1}.
-\]
-
-Set the derivative to zero:
-
-\[
+$$
+Which becomes:
+$$
 \frac{s_1 + s_2}{\theta_1} - \frac{3s_3}{1 - 3\theta_1} = 0.
-\]
+$$
 
-Rearrange to solve for \(\theta_1\):
+Solving for $\theta_1$ we get:
 
-\[
-\frac{s_1 + s_2}{\theta_1} = \frac{3s_3}{1 - 3\theta_1},
-\]
-
-\[
-(s_1 + s_2)(1 - 3\theta_1) = 3s_3\theta_1,
-\]
-
-\[
-s_1 + s_2 - 3\theta_1(s_1 + s_2) = 3s_3\theta_1,
-\]
-
-\[
-s_1 + s_2 = 3\theta_1(s_1 + s_2 + s_3).
-\]
-
-Solve for \(\theta_1\):
-
-\[
+$$
 \theta_1 = \frac{s_1 + s_2}{3(s_1 + s_2 + s_3)}.
-\]
+$$
 
-Now, using the constraint \(\theta_2 = 1 - 3\theta_1\):
+Now we solve for $\theta_2$ by using the substitution expression we used earlier to get:
 
-\[
+$$
 \theta_2 = 1 - 3\left( \frac{s_1 + s_2}{3(s_1 + s_2 + s_3)} \right),
-\]
-
-\[
-\theta_2 = 1 - \frac{s_1 + s_2}{s_1 + s_2 + s_3},
-\]
-
-\[
+$$
+Which becomes:
+$$
 \theta_2 = \frac{s_3}{s_1 + s_2 + s_3}.
-\]
+$$
 
-Thus, the maximum likelihood estimators \(\hat{\theta}_1\) and \(\hat{\theta}_2\) are:
-
-\[
-\hat{\theta}_1 = \frac{s_1 + s_2}{3(s_1 + s_2 + s_3)},
-\]
-
-\[
-\hat{\theta}_2 = \frac{s_3}{s_1 + s_2 + s_3}.
-\]
+Thus, the MLE is equal to $\theta_1$ and $\theta_2$ that are solved for above.
 
 ## Question 2
 <b>
@@ -251,117 +135,37 @@ Please find the maximum likelihood estimator (MLE) of the parameter $\beta$. Sho
 </b>
 
 
-To find the maximum likelihood estimator (MLE) of the parameter \(\beta\) for an i.i.d. sample from an exponential distribution, we follow these steps:
+To solve for this we will do the exact same process that we did above for $\theta$ but instead solve for the MLE of $\beta$.
 
-### Step 1: Write Down the Likelihood Function
-
-Given the density function of the exponential distribution:
-
-\[
-f(x \mid \beta) = \frac{1}{\beta} \exp \left(-\frac{x}{\beta}\right), \quad \text{for } 0 \leq x < \infty,
-\]
-
-the likelihood function for the i.i.d. sample \( \{x^{(1)}, x^{(2)}, \ldots, x^{(n)}\} \) is:
-
-\[
-L(\beta \mid x^{(1)}, \ldots, x^{(n)}) = \prod_{i=1}^n f(x^{(i)} \mid \beta).
-\]
-
-Substitute the density function into the product:
-
-\[
+First we define the likelihood function from the density function given above:
+$$
 L(\beta \mid x^{(1)}, \ldots, x^{(n)}) = \prod_{i=1}^n \left( \frac{1}{\beta} \exp \left( -\frac{x^{(i)}}{\beta} \right) \right).
-\]
-
-### Step 2: Simplify the Likelihood Function
-
-Combine the terms inside the product:
-
-\[
-L(\beta \mid x^{(1)}, \ldots, x^{(n)}) = \left( \frac{1}{\beta} \right)^n \exp \left( -\frac{1}{\beta} \sum_{i=1}^n x^{(i)} \right).
-\]
-
-### Step 3: Write Down the Log-Likelihood Function
-
-The log-likelihood function is the natural logarithm of the likelihood function:
-
-\[
-\ell(\beta \mid x^{(1)}, \ldots, x^{(n)}) = \log L(\beta \mid x^{(1)}, \ldots, x^{(n)}).
-\]
-
-Substitute the likelihood function:
-
-\[
+$$
+Now we apply the log to the function in order to find the log likliehood function:
+$$
 \ell(\beta \mid x^{(1)}, \ldots, x^{(n)}) = \log \left( \left( \frac{1}{\beta} \right)^n \exp \left( -\frac{1}{\beta} \sum_{i=1}^n x^{(i)} \right) \right).
-\]
+$$
 
-Use the properties of logarithms to simplify:
-
-\[
-\ell(\beta \mid x^{(1)}, \ldots, x^{(n)}) = n \log \left( \frac{1}{\beta} \right) + \log \left( \exp \left( -\frac{1}{\beta} \sum_{i=1}^n x^{(i)} \right) \right).
-\]
-
-\[
+Which simplifies to:
+$$
 \ell(\beta \mid x^{(1)}, \ldots, x^{(n)}) = -n \log \beta - \frac{1}{\beta} \sum_{i=1}^n x^{(i)}.
-\]
+$$
 
-### Step 4: Differentiate the Log-Likelihood Function
+Now we find the derivative, by using the fact that if $f(x) = log(x)$ then $f'(x) = \frac{1}{x}$,  and set it equal to $0$:
 
-Differentiate the log-likelihood function with respect to \(\beta\):
+$$
+\frac{\partial \ell(\beta \mid x^{(1)}, \ldots, x^{(n)})}{\partial \beta} = -n \frac{1}{\beta} + \frac{1}{\beta^2} \sum_{i=1}^n x^{(i)} = 0
+$$
 
-\[
-\frac{\partial \ell(\beta \mid x^{(1)}, \ldots, x^{(n)})}{\partial \beta} = -n \frac{1}{\beta} + \frac{1}{\beta^2} \sum_{i=1}^n x^{(i)}.
-\]
+We will simplify the expression by multiply by $\beta^2$ and then solving for $\beta$:
+$$
+-n \beta + \sum_{i=1}^n x^{(i)} = 0
+$$
 
-### Step 5: Set the Derivative Equal to Zero
-
-Set the derivative equal to zero to find the critical points:
-
-\[
--n \frac{1}{\beta} + \frac{1}{\beta^2} \sum_{i=1}^n x^{(i)} = 0.
-\]
-
-Multiply through by \(\beta^2\):
-
-\[
--n\beta + \sum_{i=1}^n x^{(i)} = 0.
-\]
-
-Solve for \(\beta\):
-
-\[
-n\beta = \sum_{i=1}^n x^{(i)},
-\]
-
-\[
-\beta = \frac{1}{n} \sum_{i=1}^n x^{(i)}.
-\]
-
-### Step 6: Verify the Critical Point is a Maximum
-
-To verify that this critical point corresponds to a maximum, we can check the second derivative of the log-likelihood function. The second derivative is:
-
-\[
-\frac{\partial^2 \ell(\beta \mid x^{(1)}, \ldots, x^{(n)})}{\partial \beta^2} = n \frac{1}{\beta^2} - 2 \frac{1}{\beta^3} \sum_{i=1}^n x^{(i)}.
-\]
-
-Substitute \(\beta = \frac{1}{n} \sum_{i=1}^n x^{(i)}\) into the second derivative:
-
-\[
-\frac{\partial^2 \ell(\beta \mid x^{(1)}, \ldots, x^{(n)})}{\partial \beta^2} = n \frac{1}{\left(\frac{1}{n} \sum_{i=1}^n x^{(i)}\right)^2} - 2 \frac{1}{\left(\frac{1}{n} \sum_{i=1}^n x^{(i)}\right)^3} \sum_{i=1}^n x^{(i)}.
-\]
-
-Simplifying, we see that this expression is negative, confirming that the critical point is a maximum.
-
-### Conclusion
-
-The maximum likelihood estimator (MLE) of \(\beta\) is:
-
-\[
-\hat{\beta} = \frac{1}{n} \sum_{i=1}^n x^{(i)} = \bar{x}.
-\]
-
-So the MLE of \(\beta\) is the sample mean of the observed data.
+$$
+\beta = \frac{1}{n} \sum_{i=1}^n x^{(i)} = \bar{x}
+$$
+So the MLE of $\beta$ is simplified to equal the sample mean of the dataset, which makes sense given the density function provided.
 
 
 ## Question 3
